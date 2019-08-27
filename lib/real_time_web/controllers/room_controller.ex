@@ -30,4 +30,15 @@ defmodule RealTimeWeb.RoomController do
     room = Talk.get_room!(id)
     render(conn, "show.html", room: room)
   end
+
+  def edit(conn, %{"id" => id}) do
+    room = Talk.get_room!(id)
+    changeset = Talk.change_room(room)
+    render(conn, "edit.html", room: room, changeset: changeset)
+  end
+
+  def update(conn, params) do
+    inspect(params)
+    conn
+  end
 end
