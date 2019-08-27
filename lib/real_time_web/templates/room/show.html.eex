@@ -1,0 +1,7 @@
+<h2>
+  <%= @room.name %>
+</h2>
+
+<span>
+  <%= @room.description %>
+</span>
