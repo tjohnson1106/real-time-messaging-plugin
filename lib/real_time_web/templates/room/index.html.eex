@@ -21,9 +21,8 @@
             Choose or create a room.
           </small>
         </h2>
-        <button class="btn btn-info">
-          Create Room
-        </button>
+        <%= link "Create Room", to: Routes.room_path(@conn, :new), class: "btn
+  btn-default" %>
       </div>
     </div>
   </div>

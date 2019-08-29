@@ -46,8 +46,17 @@ defmodule RealTimeWeb.RoomController do
         |> put_flash(:info, "Room updated!")
         |> redirect(to: Routes.room_path(conn, :show, room))
 
-      {:error, %Ecto.changeset(){} = changeset} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", room: room, changeset: changeset)
     end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    room = Talk.get_room!(id)
+    {:ok, _room} = Talk.delete_room(room)
+
+    conn
+    |> put_flash(:info, "Room deleted")
+    |> redirect(to: Routes.room_path(conn, :index))
   end
 end

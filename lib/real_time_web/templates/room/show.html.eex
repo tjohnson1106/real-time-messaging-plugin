@@ -9,4 +9,8 @@
 <div>
   <%= link "Edit", to: Routes.room_path(@conn, :edit, @room.id), class: "btn
   btn-default" %>
+  <%= link "Delete", to: Routes.room_path(@conn, :delete, @room), 
+  method: :delete,
+  data: [confirm: "Do you really want to delete"],  
+  class: "btn btn-danger" %>
 </div>
