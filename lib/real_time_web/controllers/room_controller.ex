@@ -37,8 +37,17 @@ defmodule RealTimeWeb.RoomController do
     render(conn, "edit.html", room: room, changeset: changeset)
   end
 
-  def update(conn, params) do
-    inspect(params)
-    conn
+  def update(conn, %{"id" => id, "room" => room_params}) do
+    room = Talk.get_room!(id)
+
+    case Talk.update_room(room, room_params) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Room updated!")
+        |> redirect(to: Routes.room_path(conn, :show, room))
+
+      {:error, %Ecto.changeset(){} = changeset} ->
+        render(conn, "edit.html", room: room, changeset: changeset)
+    end
   end
 end
