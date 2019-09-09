@@ -2,11 +2,19 @@
   <div class="col-md-3">
     <h3>Rooms:</h3>
     <ul class="list-group">
-    <%= for room <- @rooms do %>
+      <%= for room <- @rooms do %>
       <li class="list-group-item">
-        <%= link room.name, to: Routes.room_path(@conn, :show, room.id)%>
+        <%= link room.name, to: Routes.room_path(@conn, :show, room.id)%> <%= if
+        !is_nil(room.description) && room.description != "" do>
+        <div
+          class="float-right text-info"
+          data-toggle="tooltip"
+          title="<%= room.description %>"
+        >
+          <i class="fas fa-comment-medical"> </i>
+        </div>
       </li>
-      <% end %> 
+      <% end %>
     </ul>
   </div>
   <div class="col-md-9">
@@ -22,7 +30,7 @@
           </small>
         </h2>
         <%= link "Create Room", to: Routes.room_path(@conn, :new), class: "btn
-  btn-default" %>
+        btn-default" %>
       </div>
     </div>
   </div>
