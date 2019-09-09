@@ -4,15 +4,16 @@
     <ul class="list-group">
       <%= for room <- @rooms do %>
       <li class="list-group-item">
-        <%= link room.name, to: Routes.room_path(@conn, :show, room.id)%> <%= if
-        !is_nil(room.description) && room.description != "" do>
+        <%= link room.name, to: Routes.room_path(@conn, :show, room.id) %> <%=
+        if !is_nil(room.description) && room.description != "" do %>
         <div
           class="float-right text-info"
           data-toggle="tooltip"
           title="<%= room.description %>"
         >
-          <i class="fas fa-comment-medical"> </i>
+          <i class="fas fa-comment-medical"></i>
         </div>
+        <% end %>
       </li>
       <% end %>
     </ul>
@@ -20,17 +21,12 @@
   <div class="col-md-9">
     <div class="jumbotron">
       <div class="page-header">
-        <h2>Real Time Messaging App</h2>
+        <h2>Welcome to Chat App</h2>
       </div>
       <div class="page-header">
-        <h2>
-          <!-- fix -->
-          <small>
-            Choose or create a room.
-          </small>
-        </h2>
+        <h2><small>Choose a room or make one</small></h2>
         <%= link "Create Room", to: Routes.room_path(@conn, :new), class: "btn
-        btn-default" %>
+        btn-success" %>
       </div>
     </div>
   </div>
