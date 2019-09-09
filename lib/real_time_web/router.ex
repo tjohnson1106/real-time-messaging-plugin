@@ -18,6 +18,9 @@ defmodule RealTimeWeb.Router do
 
     get "/", RoomController, :index
     resources("/rooms", RoomController, except: [:index])
+    resources("sessions", SessionController, only: [:new, :create])
+
+    # individually
     # get "/rooms/new", RoomController, :new
     # post "/rooms", RoomController, :create
     # get "/rooms/:id", RoomController, :show
