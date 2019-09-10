@@ -1,13 +1,16 @@
 defmodule RealTimeWeb.SessionController do
   use RealTimeWeb, :controller
 
+  alias RealTime.Accounts
+
   def new(conn, _) do
     render(conn, "new.html")
   end
 
+  # remember attributes passed from session
   def create(
         conn,
-        %{"email" => email, "password" => password}
+        %{"session" => %{"email" => email, "password" => password}}
       ) do
     case Accounts.sign_in(email, password) do
       {:ok, user} ->
