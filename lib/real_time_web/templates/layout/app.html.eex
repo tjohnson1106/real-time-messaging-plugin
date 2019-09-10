@@ -23,6 +23,15 @@
         <%= link "Real Time", to: Routes.room_path(@conn, :index), class:
         "navbar-brand text-light" %>
       </h3>
+      <%# display user name %> <%= if RealTime.Accounts.user_signed_in?(@conn) do %>
+      <%# fix nav text styling %> 
+      <nav class="text-white">
+        Signed in as:
+        <strong>
+          <%= RealTime.Accounts.current_user(@conn).username %>
+        </strong>
+      </nav>
+        <% end %>     
     </div>
 
     <%= unless is_nil(get_flash(@conn, :info)) do %>
@@ -59,8 +68,30 @@
     ></script>
     <script
       type="text/javascript"
-      <!-- double quotes must be enclosed in single quotes or will get function clause matching error as I did below -->
-      src='<%= Routes.static_path(@conn, "/js/app.js") %>'
-    ></script>
+      <!--
+      double
+      quotes
+      must
+      be
+      enclosed
+      in
+      single
+      quotes
+      or
+      will
+      get
+      function
+      clause
+      matching
+      error
+      as
+      I
+      did
+      below
+      --
+    >
+        src='<%= Routes.static_path(@conn, "/js/app.js") %>'
+      >
+    </script>
   </body>
 </html>

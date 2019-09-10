@@ -19,4 +19,15 @@ defmodule RealTime.Accounts do
         # cond considers any value besides nil and false to be true:cond considers any value besides nil and false to be true
     end
   end
+
+  # if not not current user but doesn't return current user use 'do:'
+  # only needs one argument(conn)
+  def user_signed_in?(conn), do: !!current_user(conn)
+
+  def current_user(conn) do
+    # return current session value
+    user_id = Plug.Conn.get_session(conn, :current_user_id)
+    # check for user ID
+    if user_id, do: Repo.get(User, user_id)
+  end
 end
