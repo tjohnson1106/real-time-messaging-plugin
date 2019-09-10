@@ -18,7 +18,8 @@ defmodule RealTimeWeb.Router do
 
     get "/", RoomController, :index
     resources("/rooms", RoomController, except: [:index])
-    resources("sessions", SessionController, only: [:new, :create])
+    resources("/sessions", SessionController, only: [:new, :create])
+    delete "/sign_out", SessionController, :delete
 
     # individually
     # get "/rooms/new", RoomController, :new
