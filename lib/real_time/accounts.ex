@@ -9,7 +9,7 @@ defmodule RealTime.Accounts do
 
     # if does not evaluate to nil or false true must be explicit to avoid CondClauseError
     cond do
-      user && user.password_hash == password ->
+      user && Bcrypt.check_pass(password, user.password_hash) ->
         {:ok, user}
 
       # in any other case  
@@ -29,5 +29,10 @@ defmodule RealTime.Accounts do
     user_id = Plug.Conn.get_session(conn, :current_user_id)
     # check for user ID
     if user_id, do: Repo.get(User, user_id)
+  end
+
+  # drop session map
+  def sign_out(conn) do
+    Plug.Conn.configure_session(conn, drop: true)
   end
 end

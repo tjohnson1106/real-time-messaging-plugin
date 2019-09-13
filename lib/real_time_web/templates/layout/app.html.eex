@@ -25,12 +25,13 @@
       </h3>
       <%# display user name %> <%= if RealTime.Accounts.user_signed_in?(@conn) do %>
       <%# fix nav text styling %> 
-      <nav class="text-white">
+      <nav class="text-light">
         Signed in as:
         <strong>
           <%= RealTime.Accounts.current_user(@conn).username %>
         </strong>
       </nav>
+      <%= link "Sign out", to: Routes.session_path(@conn, :delete), method: :delete, class: "btn btn-outline-primary"%>
         <% end %>     
     </div>
 
