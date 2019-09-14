@@ -23,18 +23,23 @@
         <%= link "Real Time", to: Routes.room_path(@conn, :index), class:
         "navbar-brand text-light" %>
       </h3>
-      <%# display user name %> <%= if RealTime.Accounts.user_signed_in?(@conn) do %>
-      <%# fix nav text styling %> 
-      <nav class="text-light">
+      <%# display user name %> <%= if RealTime.Accounts.user_signed_in?(@conn)
+      do %> <%# fix nav text styling %>
+      <nav class="text-light my-2 my-md-0 mr-md-3">
         Signed in as:
         <strong>
           <%= RealTime.Accounts.current_user(@conn).username %>
         </strong>
       </nav>
-      <%# corresponding to scope "/" in router %>
-      <%= link "Sign Out", to: Routes.session_path(@conn, :delete), method: :delete, class: "btn btn-outline-primary"%>
-        <% end %>     
-        <%= link "Sign Up", to: Routes.registration_path(@conn, :new), class: "btn btn-outline-primary ml-md-3"    %>
+      <%# corresponding to scope "/" in router %> 
+      <%= link "Sign Out", to:
+      Routes.session_path(@conn, :delete), method: :delete, class: "btn
+      btn-outline-primary"%> 
+      <% else %> 
+      <%= link "Sign Up", to:
+      Routes.registration_path(@conn, :new), class: "btn btn-outline-primary
+      ml-md-3" %>
+       <% end %>
     </div>
 
     <%= unless is_nil(get_flash(@conn, :info)) do %>
