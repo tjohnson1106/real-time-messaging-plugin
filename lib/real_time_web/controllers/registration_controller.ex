@@ -5,6 +5,8 @@ defmodule RealTimeWeb.RegistrationController do
     render(conn, "new.html", changeset: conn)
   end
 
-  def create(conn, _params) do
+  def create(conn, params) do
+    inspect(params)
+    conn
   end
 end
