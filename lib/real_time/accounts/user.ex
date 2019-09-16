@@ -32,10 +32,10 @@ defmodule RealTime.Accounts.User do
     |> encrypt_password()
   end
 
-  defp encrypt_password() do
+  defp encrypt_password(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
-        put_change(changeset, :password_hash, Bcrypt.hash_pw_salt(password))
+        put_change(changeset, :password_hash, Bcrypt.hash_pwd_salt(password))
 
       _ ->
         changeset
