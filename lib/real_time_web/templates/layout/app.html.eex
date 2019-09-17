@@ -23,8 +23,7 @@
         <%= link "Real Time", to: Routes.room_path(@conn, :index), class:
         "navbar-brand text-light" %>
       </h3>
-      <%# display user name %> <%= if RealTime.Accounts.user_signed_in?(@conn)
-      do %> <%# fix nav text styling %>
+      <%# display user name %> <%= if RealTime.Accounts.user_signed_in?(@conn) do %> <%# fix nav text styling %>
       <nav class="text-light my-2 my-md-0 mr-md-3">
         Signed in as:
         <strong>

@@ -59,4 +59,15 @@ defmodule RealTimeWeb.RoomController do
     |> put_flash(:info, "Room deleted")
     |> redirect(to: Routes.room_path(conn, :index))
   end
+
+  defp auth_user(conn, _params) do
+    if conn.assigns.signed_in? do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You need to be signed in")
+      |> redirect(to: Routes.session_path(conn, :new))
+      |> halt()
+    end
+  end
 end
