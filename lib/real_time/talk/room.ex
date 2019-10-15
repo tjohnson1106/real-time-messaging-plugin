@@ -7,6 +7,7 @@ defmodule RealTime.Talk.Room do
     field :description, :string
     field :name, :string
     field :topic, :string
+    belongs_to :user, RealTime.Accounts.User
 
     timestamps()
   end
