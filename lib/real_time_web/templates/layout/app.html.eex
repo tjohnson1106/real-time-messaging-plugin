@@ -16,28 +16,33 @@
     %>"/>
   </head>
   <body>
- 
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-dark">
-    <h3 class="my-0 mr-md-auto font-weight-normal">
-      <%= link "Real Time", to: Routes.room_path(@conn, :index), class: "navbar-brand text-light" %>
-    </h3>
-    <%= if @signed_in? do %>
+    <div
+      class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-dark"
+    >
+      <h3 class="my-0 mr-md-auto font-weight-normal">
+        <%= link "Real Time", to: Routes.room_path(@conn, :index), class:
+        "navbar-brand text-light" %>
+      </h3>
+      <%= if @signed_in? do %>
       <nav class="text-light my-2 my-md-0 mr-md-3">
-        Signed in as: <strong ><%= RealTime.Accounts.current_user(@conn).username %></strong>
+        Signed in as:
+        <strong><%= RealTime.Accounts.current_user(@conn).username %></strong>
       </nav>
-      <%= link "Sign Out", to: Routes.session_path(@conn, :delete), method: :delete, class: "btn btn-outline-primary"%>
-    <% else %>
-    <%= link "Sign Up", to: Routes.registration_path(@conn, :new), class: "btn btn-outline-primary ml-md-3"%>
-    <%= link "Login", to: Routes.session_path(@conn, :new), class: "btn btn-outline-info ml-md-3"%>
+      <%= link "Sign Out", to: Routes.session_path(@conn, :delete), method:
+      :delete, class: "btn btn-outline-primary"%> <% else %> <%= link "Sign Up",
+      to: Routes.registration_path(@conn, :new), class: "btn btn-outline-primary
+      ml-md-3"%> <%= link "Login", to: Routes.session_path(@conn, :new), class:
+      "btn btn-outline-info ml-md-3"%> <% end %>
+    </div>
 
-    <% end %>
-  </div>
-    
     <%= unless is_nil(get_flash(@conn, :info)) do %>
-      <p class="alert alert-success" role="alert"><%= get_flash(@conn, :info) %></p>
-    <% end %>
-    <%= unless is_nil(get_flash(@conn, :error)) do %>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <p class="alert alert-success" role="alert">
+      <%= get_flash(@conn, :info) %>
+    </p>
+    <% end %> <%= unless is_nil(get_flash(@conn, :error)) do %>
+    <p class="alert alert-danger" role="alert">
+      <%= get_flash(@conn, :error) %>
+    </p>
     <% end %>
     <main role="main" class="container">
       <%= render @view_module, @view_template, assigns %>
@@ -62,9 +67,12 @@
       defer
       src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"
     ></script>
-    <script
-      type="text/javascript" src='<%= Routes.static_path(@conn, "/js/app.js") %>'
-      >
+    <script>
+      window.userToken = "<%= assigns[:user_token] %>";
     </script>
+    <script
+      type="text/javascript"
+      src='<%= Routes.static_path(@conn, "/js/app.js") %>'
+    ></script>
   </body>
 </html>
