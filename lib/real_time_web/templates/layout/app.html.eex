@@ -63,30 +63,7 @@
       src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"
     ></script>
     <script
-      type="text/javascript"
-      <!--
-      double
-      quotes
-      must
-      be
-      enclosed
-      in
-      single
-      quotes
-      or
-      will
-      get
-      function
-      clause
-      matching
-      error
-      as
-      I
-      did
-      below
-      --
-    >
-        src='<%= Routes.static_path(@conn, "/js/app.js") %>'
+      type="text/javascript" src='<%= Routes.static_path(@conn, "/js/app.js") %>'
       >
     </script>
   </body>

@@ -3,8 +3,11 @@ defmodule RealTimeWeb.RoomController do
 
   alias RealTime.Talk.Room
   alias RealTime.Talk
+  alias RealTimeWeb.Plugs.AuthUser
 
-  plug RealTimeWeb.Plugs.Auth_User when action not in [:index]
+  plug AuthUser when action not in [:index]
+  # 101520191715 TODO Check that following plug is working
+  plug :authorize_user when action in [:edit, :update, :delete]
 
   def index(conn, _params) do
     rooms = Talk.list_rooms()
@@ -17,7 +20,7 @@ defmodule RealTimeWeb.RoomController do
   end
 
   def create(conn, %{"room" => room_params}) do
-    case Talk.create_room(room_params) do
+    case Talk.create_room(conn.assigns.current_user, room_params) do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Room Created!")
@@ -60,5 +63,19 @@ defmodule RealTimeWeb.RoomController do
     conn
     |> put_flash(:info, "Room deleted")
     |> redirect(to: Routes.room_path(conn, :index))
+  end
+
+  defp authorize_user(conn, _params) do
+    %{params: %{"id" => room_id}} = conn
+    room = Talk.get_room!(room_id)
+
+    if AuthUser.can_access?(conn.assigns.current_user, room) do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You are not authorized")
+      |> redirect(to: Routes.room_path(conn, :index))
+      |> halt()
+    end
   end
 end

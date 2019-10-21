@@ -1,16 +1,28 @@
-<h2>
-  <%= @room.name %>
-</h2>
+<h2><%= @room.name %></h2>
 
-<span>
-  <%= @room.description %>
-</span>
-
+<span><%= @room.description %></span>
+<%# Watch: AuthUser alone was runtime undefined error when accessing room %>
+<%= if RealTimeWeb.Plugs.AuthUser.can_access?(@current_user, @room) do %>
 <div>
   <%= link "Edit", to: Routes.room_path(@conn, :edit, @room.id), class: "btn
-  btn-default" %>
-  <%= link "Delete", to: Routes.room_path(@conn, :delete, @room), 
-  method: :delete,
-  data: [confirm: "Do you really want to delete"],  
+  btn-success" %> <%= link "Delete", to: Routes.room_path(@conn, :delete,
+  @room), method: :delete, data: [confirm: "Do you really want to Delete?"],
   class: "btn btn-danger" %>
 </div>
+<% end %>
+
+<ul class="list-group mt-5" id="display"></ul>
+
+<form class="input-group mt-3" id="message-form">
+  <input
+    type="text"
+    class="form-control"
+    id="message-body"
+    placeholder="input message for #<%= @room.name %>"
+  />
+  <div class="input-group-append">
+    <button class="btn btn-outline-info" id="message-button">
+      Send
+    </button>
+  </div>
+</form>
