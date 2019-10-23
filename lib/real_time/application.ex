@@ -11,7 +11,8 @@ defmodule RealTime.Application do
       # Start the Ecto repository
       RealTime.Repo,
       # Start the endpoint when the application starts
-      RealTimeWeb.Endpoint
+      RealTimeWeb.Endpoint,
+      RealTimeWeb.Presence
       # Starts a worker by calling: RealTime.Worker.start_link(arg)
       # {RealTime.Worker, arg},
     ]

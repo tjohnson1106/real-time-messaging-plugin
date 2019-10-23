@@ -12,6 +12,8 @@ let socket = new Socket("/socket", { params: { token: window.userToken } });
 
 let roomId = window.roomId;
 
+let presences = {};
+
 socket.connect();
 
 if (roomId) {
@@ -31,6 +33,16 @@ if (roomId) {
     displayMessage(message);
   });
 
+  channel.on("presence_state", (state) => {
+    presences = Presence.syncState(presences, state);
+    displayUsers(presences);
+  });
+
+  channel.on("presence_diff", (diff) => {
+    presences = Presence.syncDiff(presences, diff);
+    displayUsers(presences);
+  });
+
   document.querySelector("#message-form").addEventListener("submit", (e) => {
     e.preventDefault();
     let input = e.target.querySelector("#message-body");
@@ -41,13 +53,32 @@ if (roomId) {
   });
 
   const displayMessage = (msg) => {
+    console.log("display message");
     let template = `
   <li class="list-group-item">
-  ${msg.body}
+  <strong>
+  ${msg.user.username}
+  </strong>: ${msg.body} 
   </li>
   `;
 
     document.querySelector("#display").innerHTML += template;
+  };
+
+  const displayUsers = (presences) => {
+    let usersOnline = Presence.list(
+      presences,
+      (_id, { metas: [user, ...rest] }) => {
+        return `
+           <div id="user-${user.user_id}">
+           <strong class="text-secondary">
+           ${user.username}
+           </strong>
+           </div>
+           `;
+      }
+    ).join("");
+    document.querySelector("#users-online").innerHTML = usersOnline;
   };
 }
 
