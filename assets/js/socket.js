@@ -6,7 +6,7 @@
 //
 // Pass the token on params as below. Or remove it
 // from the params if you are not using authentication.
-import { Socket } from "phoenix";
+import { Socket, Presence } from "phoenix";
 
 let socket = new Socket("/socket", { params: { token: window.userToken } });
 
@@ -33,7 +33,10 @@ if (roomId) {
     displayMessage(message);
   });
 
+  // Presence listeners
+
   channel.on("presence_state", (state) => {
+    console.log("presence_map", presences, "presence_map");
     presences = Presence.syncState(presences, state);
     displayUsers(presences);
   });

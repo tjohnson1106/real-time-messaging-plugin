@@ -14,6 +14,7 @@ defmodule RealTimeWeb.RoomChannel do
     room_id = socket.assigns[:room_id]
     user = get_user(socket)
     message = %{body: body, user: %{username: user.username}}
+
     broadcast!(socket, "room:#{room_id}:new_message", message)
     {:reply, :ok, socket}
   end
@@ -36,3 +37,15 @@ defmodule RealTimeWeb.RoomChannel do
     Repo.get(User, socket.assigns[:current_user_id])
   end
 end
+
+# idea of Presence JSON structure(see handle_info callback)
+
+# { "user:id":
+# { metas: [
+#   {
+#      "user_id": "id"
+#      "username": "user"
+#   }
+# ]
+#  }
+# }
