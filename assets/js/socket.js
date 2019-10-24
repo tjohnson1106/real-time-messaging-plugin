@@ -108,11 +108,17 @@ if (roomId) {
     let usersOnline = Presence.list(
       presences,
       (_id, { metas: [user, ...rest] }) => {
+        var typingTemplate = "";
+        if (user.typing) {
+          typingTemplate = `<i>(Typing... ) </i>`;
+        }
+
         return `
            <div id="user-${user.user_id}">
            <strong class="text-secondary">
            ${user.username}
            </strong>
+           ${typingTemplates}
            </div>
            `;
       }

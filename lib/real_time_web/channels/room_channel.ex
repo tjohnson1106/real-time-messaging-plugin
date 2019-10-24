@@ -19,6 +19,20 @@ defmodule RealTimeWeb.RoomChannel do
     {:reply, :ok, socket}
   end
 
+  # check for typing handler
+  def handle_in("user:typing", %{"typing" => typing}, socket) do
+    user = get_user(socket)
+
+    {:ok, _} =
+      Presence.update(socket, "user:#{user.id}", %{
+        typing: typing,
+        user_id: user.id,
+        username: user.username
+      })
+
+    {:noreply, socket}
+  end
+
   def handle_info(:after_join, socket) do
     push(socket, "presence_state", Presence.list(socket))
 
