@@ -17,6 +17,12 @@ let presences = {};
 socket.connect();
 
 if (roomId) {
+  // check for uer typing
+
+  const timeout = 3000;
+  var typingTimer;
+  let userTyping = false;
+
   // Now that you are connected, you can join channels with a topic:
   let channel = socket.channel(`room:${roomId}`, {});
   channel
@@ -54,6 +60,36 @@ if (roomId) {
 
     input.value = "";
   });
+
+  document.querySelector("#message-body").addEventListener("keydown", () => {
+    userStartsTyping();
+    clearTimeout(typingTimer);
+  });
+
+  document.querySelector("#message-body").addEventListener("keyup", () => {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(userStopTyping, timeout);
+  });
+
+  const userStartsTyping = () => {
+    if (userTyping) {
+      return;
+    }
+
+    userTyping = true;
+    channel.push("user:typing", {
+      typing: true
+    });
+  };
+
+  const userStopTyping = () => {
+    clearTimeout(typingTimer);
+    userTyping = false;
+
+    channel.push("user:typing", {
+      typing: false
+    });
+  };
 
   const displayMessage = (msg) => {
     console.log("display message");
